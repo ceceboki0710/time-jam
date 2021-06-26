@@ -8,8 +8,8 @@ using UnityEngine;
 public class CharacterController2D : MonoBehaviour
 {
 
-    public float MovementSpeed = 1f;
-    public float JumpForce = 1f;
+    public float MovementSpeed;
+    public float JumpForce;
 
     public bool isgrounded;
 
