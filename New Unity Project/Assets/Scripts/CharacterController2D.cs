@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 //Made by Color!Please Studios
 
 [RequireComponent(typeof(Rigidbody2D))]
@@ -14,6 +15,8 @@ public class CharacterController2D : MonoBehaviour
     public bool isgrounded;
 
     public Rigidbody2D rb2d; 
+
+    public Animator Player;
     // Start is called before the first frame update
     void Start()
     {
@@ -26,6 +29,7 @@ public class CharacterController2D : MonoBehaviour
         //Horizontal Movement 
         var movementx = Input.GetAxis("Horizontal");
         transform.position += new Vector3(movementx, 0, 0) * Time.deltaTime * MovementSpeed;
+        Player.SetFloat("X", movementx);
         //Vertical Movement 
         //var movementy = Input.GetAxis("Vertical");
         //transform.position += new Vector3(0, movementy, 0) * Time.deltaTime * MovementSpeed;
@@ -42,7 +46,11 @@ public class CharacterController2D : MonoBehaviour
         if (Input.GetButtonDown("Jump") && isgrounded == true)
         {
             rb2d.AddForce(new Vector2(0, JumpForce), ForceMode2D.Impulse);
+            Player.SetBool("Jumped", true);
+            //Debug.Log("jumped");
         }
+
+        
     }
     
 
@@ -51,6 +59,12 @@ public class CharacterController2D : MonoBehaviour
         if (other.tag == "Ground")
         {
             isgrounded = true;
+            Player.SetBool("Jumped", false);
+        }
+
+        if (other.tag == "adioslaser")
+        {
+            SceneManager.LoadScene(1);
         }
        
     }
